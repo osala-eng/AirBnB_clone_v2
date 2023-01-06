@@ -30,7 +30,7 @@ class Place(BaseModel):
         longitude = Column(Float, nullable=True)
         reviews = relationship('Review', backref='place',
                                cascade='all, delete, delete-orphan')
-        amenities = relationship('Amenity', secondary=place_amenity,
+        amenities = relationship('Amenity', secondary='place_amenity',
                                  viewonly=False,
                                  back_populates='place_amenities')
 
@@ -66,8 +66,9 @@ class Place(BaseModel):
             from models.amenity import Amenity
 
             list_amenities = []
-            for id in self.amenity_ids:
-                list_amenities.append(storage.all(Amenity)[id])
+            for amnty in storage.all(Amenity).values():
+                if amnty.id in self.amenity_ids:
+                    list_amenities.append(amnty)
             return list_amenities
 
         @amenities.setter
