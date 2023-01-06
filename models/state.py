@@ -7,7 +7,6 @@ from os import getenv
 from models.stringtemplates import HBNB_TYPE_STORAGE, DB
 
 
-
 class State(BaseModel, Base):
     """
     State class
@@ -15,12 +14,12 @@ class State(BaseModel, Base):
     """
     __tablename__ = 'states'
 
-    if(getenv(HBNB_TYPE_STORAGE) == DB):
+    if (getenv(HBNB_TYPE_STORAGE) == DB):
         name = Column(String(128), nullable=False)
         cities = relationship('City', backref='state',
-                               cascade='all, delete, delete-orphan')
+                              cascade='all, delete, delete-orphan')
     else:
-        name=''
+        name = ''
 
         @property
         def cities(self):
