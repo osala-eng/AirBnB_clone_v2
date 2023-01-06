@@ -29,7 +29,8 @@ class Place(BaseModel):
         longitude = Column(Float, nullable=True)
         reviews = relationship('Review', backref='place',
                                cascade='all, delete, delete-orphan')
-        amenities = relationship('Amenity', secondary=place_amenity, viewonly=False, back_populates='place_amenities')
+        amenities = relationship(
+            'Amenity', secondary=place_amenity, viewonly=False, back_populates='place_amenities')
 
     else:
         city_id = ""
@@ -49,10 +50,27 @@ class Place(BaseModel):
             '''Return list of reviews'''
             from models import storage
             from models.review import Review
-            from models.amenity import Amenity
 
             list_reviews = []
             for review in storage.all(Review).values():
                 if review.place_id == self.id:
                     list_reviews.append(review)
             return list_reviews
+
+        @property
+        def amenities(self) -> list:
+            '''Get amenity list'''
+            from models import storage
+            from models.amenity import Amenity
+
+            list_amenities = []
+            for id in self.amenity_ids:
+                list_amenities.append(storage.all(Amenity)[id])
+            return list_amenities
+
+        @amenities.setter
+        def amenities(self, amenity=None) -> None:
+            '''Set amenity list'''
+
+            if amenity:
+                self.amenity_ids.append(amenity.id)
