@@ -18,7 +18,7 @@ else:
     storage = FileStorage()
 
 classes = {'User': User, 'BaseModel': BaseModel,
-            'Place': Place, 'State': State, 'City': City,
-            'Amenity': Amenity, 'Review': Review}
+           'Place': Place, 'State': State, 'City': City,
+           'Amenity': Amenity, 'Review': Review}
 
 storage.reload()
