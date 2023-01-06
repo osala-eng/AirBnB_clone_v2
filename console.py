@@ -125,7 +125,8 @@ class HBNBCommand(cmd.Cmd):
             new_instance = eval(args[0])()
             for arg in args[1:]:
                 try:
-                    key, value = arg.split('=')[0:1]
+                    key = arg.split('=')[0]
+                    value = arg.split('=')[1]
                     if hasattr(new_instance, key):
                         value = value.replace('_', ' ')
                         try:
