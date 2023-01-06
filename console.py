@@ -4,7 +4,7 @@ import cmd
 import sys
 from shlex import split
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models import storage
 from models.user import User
 from models.place import Place
 from models.state import State

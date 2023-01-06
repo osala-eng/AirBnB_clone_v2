@@ -6,8 +6,8 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from models.state import State
 from models.city import City
 from models.base_model import Base
-from models import stringtemplates as ENV, classes
-
+from models import stringtemplates as ENV
+import models
 
 
 class DBStorage:
@@ -35,13 +35,13 @@ class DBStorage:
         database = {}
 
         if cls != '':
-            objs = self.__session.query(classes[cls]).all()
+            objs = self.__session.query(models.classes[cls]).all()
             for obj in objs:
                 key = f'{obj.__class__.__name__}.{obj.id}'
                 database[key] = obj
             return database
         else:
-            for key, value in classes.items():
+            for key, value in models.classes.items():
                 if key != 'BaseModel':
                     objs = self.__session.query(value).all()
                     if len(objs):
