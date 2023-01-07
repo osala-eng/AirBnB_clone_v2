@@ -18,6 +18,6 @@ class Amenity(BaseModel, Base):
         name = Column(String(128), nullable=False)
         place_amenities = relationship("Place",
                                        secondary=place_amenity,
-                                       back_populates='place_amenities')
+                                       back_populates='amenities')
     else:
         name = ''
