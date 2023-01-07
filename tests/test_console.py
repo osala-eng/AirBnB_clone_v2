@@ -3,30 +3,78 @@
 
 
 import sys
+import models
 import unittest
 from io import StringIO
 from console import HBNBCommand
 from models.stringtemplates import HBNB_TYPE_STORAGE, FILE, DB
-from os import getenv
+from os import getenv, rename, remove
 from models import storage
+from models import State
+from models.engine.db_storage import DBStorage
+from unittest.mock import create_autospec
+from pep8 import StyleGuide
+import datetime
 
 db = getenv(HBNB_TYPE_STORAGE, FILE)
+LOCAL_DB_NAME = 'file.json'
+CONSOLE_FILE = 'console.py'
 
 
-class test_console(unittest.TestCase):
+class TestConsole(unittest.TestCase):
     '''Test console module'''
+    __db_file_name = None
+
+    @classmethod
+    def setUpClass(self) -> None:
+        '''Test Class Setup'''
+        try:
+            self.__db_file_name = f'temp{datetime.utcnow()}'
+            rename(LOCAL_DB_NAME, self.__db_file_name)
+        except Exception:
+            pass
+        self.__cmd = HBNBCommand()
+        return super().setUpClass()
+
+    @classmethod
+    def tearDownClass(self) -> None:
+        '''Class teardown'''
+        try:
+            rename(self.__db_file_name, LOCAL_DB_NAME)
+        except Exception:
+            pass
+        del self.__cmd
+        if db == DB:
+            storage.close()
+        return super().tearDownClass()
 
     def setUp(self) -> None:
         '''Setup'''
         self.backup = sys.stdout
         self.capt_out = StringIO()
         sys.stdout = self.capt_out
-        return super().setUp()
+        if db == FILE:
+            storage.__objects = {}
 
     def tearDown(self) -> None:
         '''Teardown'''
+        try:
+            remove(LOCAL_DB_NAME)
+        except Exception:
+            pass
         sys.stdout = self.backup
-        return super().tearDown()
+
+    def test_pep8(self) -> None:
+        '''Test pep8 styling'''
+        style = StyleGuide(quit=True)
+        pep = style.check_files([CONSOLE_FILE])
+        self.assertEqual(pep.total_errors, 0, 'Fix pep8 style')
+
+    def test_docstring(self) -> None:
+        '''Ensure each method has a Descriptiop'''
+        self.assertIsNotNone(HBNBCommand.__doc__)
+
+
 
     def test_quit(self) -> None:
         '''Test quit console'''
