@@ -109,6 +109,7 @@ class test_basemodel(unittest.TestCase):
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
 
+
     def test_uuid(self):
         """
         Testin UUID
@@ -221,3 +222,4 @@ class TestBaseModel(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
