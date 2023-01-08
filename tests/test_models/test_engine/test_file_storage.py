@@ -4,8 +4,9 @@ import unittest
 from models.base_model import BaseModel
 from models import storage
 import os
+from models.stringtemplates import HBNB_TYPE_STORAGE, DB, FILE
 
-
+@unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE, FILE) == DB)
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
 
