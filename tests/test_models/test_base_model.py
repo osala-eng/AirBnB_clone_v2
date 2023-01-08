@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """ """
+import inspect
 from models.base_model import BaseModel
 import unittest
 import datetime
 from uuid import UUID
 import json
 import os
-import pycodestyle
+from pycodestyle import StyleGuide
 
 
 class test_basemodel(unittest.TestCase):
@@ -23,7 +24,7 @@ class test_basemodel(unittest.TestCase):
         """
         Test pep8 format
         """
-        pycostyle = pycodestyle.StyleGuide(quiet=True)
+        pycostyle = StyleGuide(quiet=True)
         result = pycostyle.check_files(['models/base_model.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
@@ -142,7 +143,7 @@ class TestCodeFormat(unittest.TestCase):
         """
         Test pep8 format
         """
-        pycostyle = pycodestyle.StyleGuide(quiet=True)
+        pycostyle = StyleGuide(quiet=True)
         result = pycostyle.check_files(['models/base_model.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
@@ -185,7 +186,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_pep8_BaseModel(self):
         """Testing for pep8"""
-        style = pep8.StyleGuide(quiet=True)
+        style = StyleGuide(quiet=True)
         p = style.check_files(['models/base_model.py'])
         self.assertEqual(p.total_errors, 0, "fix pep8")
 
@@ -222,4 +223,3 @@ class TestBaseModel(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
