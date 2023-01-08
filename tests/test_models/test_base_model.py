@@ -8,6 +8,10 @@ from uuid import UUID
 import json
 import os
 from pycodestyle import StyleGuide
+from models.stringtemplates import HBNB_TYPE_STORAGE, DB, FILE
+
+
+db = os.getenv(HBNB_TYPE_STORAGE, FILE)
 
 
 class test_basemodel(unittest.TestCase):
@@ -59,6 +63,7 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = BaseModel(**copy)
 
+    @unittest.skipIf(db == DB, 'Test for FS only')
     def test_save(self):
         """ Testing save """
         i = self.value()

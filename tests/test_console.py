@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 '''Console test suite'''
-
-
 import sys
 import unittest
 from io import StringIO
@@ -15,21 +13,19 @@ from unittest.mock import create_autospec
 from pycodestyle import StyleGuide
 import datetime
 
-db = getenv(HBNB_TYPE_STORAGE, FILE)
-LOCAL_DB_NAME = 'file.json'
-CONSOLE_FILE = 'console.py'
-
 
 class TestConsole(unittest.TestCase):
     '''Test console module'''
     __db_file_name = None
-
+    db = getenv(HBNB_TYPE_STORAGE, FILE)
+    LOCAL_DB_NAME = 'file.json'
+    CONSOLE_FILE = 'console.py'
     @classmethod
     def setUpClass(self) -> None:
         '''Test Class Setup'''
         try:
             self.__db_file_name = f'temp{datetime.utcnow()}'
-            rename(LOCAL_DB_NAME, self.__db_file_name)
+            rename(self.LOCAL_DB_NAME, self.__db_file_name)
         except Exception:
             pass
         self.__cmd = HBNBCommand()
@@ -39,11 +35,11 @@ class TestConsole(unittest.TestCase):
     def tearDownClass(self) -> None:
         '''Class teardown'''
         try:
-            rename(self.__db_file_name, LOCAL_DB_NAME)
+            rename(self.__db_file_name, self.LOCAL_DB_NAME)
         except Exception:
             pass
         del self.__cmd
-        if db == DB:
+        if self.db == DB:
             storage.close()
         return super().tearDownClass()
 
@@ -52,13 +48,13 @@ class TestConsole(unittest.TestCase):
         self.backup = sys.stdout
         self.capt_out = StringIO()
         sys.stdout = self.capt_out
-        if db == FILE:
+        if self.db == FILE:
             storage.__objects = {}
 
     def tearDown(self) -> None:
         '''Teardown'''
         try:
-            remove(LOCAL_DB_NAME)
+            remove(self.LOCAL_DB_NAME)
         except Exception:
             pass
         sys.stdout = self.backup
@@ -66,7 +62,7 @@ class TestConsole(unittest.TestCase):
     def test_pep8(self) -> None:
         '''Test pep8 styling'''
         style = StyleGuide(quit=True)
-        pep = style.check_files([CONSOLE_FILE])
+        pep = style.check_files([self.CONSOLE_FILE])
         self.assertEqual(pep.total_errors, 0, 'Fix pycodestyle style')
 
     def test_docstring(self) -> None:
