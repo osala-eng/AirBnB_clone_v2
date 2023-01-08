@@ -1,9 +1,8 @@
-#!/usr/bin/bash
+#!/usr/bin/python3
 '''Console test suite'''
 
 
 import sys
-import models
 import unittest
 from io import StringIO
 from console import HBNBCommand
@@ -190,3 +189,7 @@ class TestConsole(unittest.TestCase):
         console.onecmd('create State name=California')
         result = storage.all('State')
         self.assertTrue(len(result))
+
+
+if __name__ == '__main__':
+    unittest.main()
