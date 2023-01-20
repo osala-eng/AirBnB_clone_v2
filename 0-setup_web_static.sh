@@ -3,4 +3,6 @@
 
 mkdir -p "/data/web_static/releases/test/"
 mkdir -p "/data/web_static/shared/"
-ln -s "/data/web_static/current" "/data/web_static/releases/test/"
+echo "<h1>Hello World!</h1>" > "/data/web_static/releases/test/index.html"
+ln -sf "/data/web_static/current" "/data/web_static/releases/test/"
+chown -R ubuntu:ubuntu "/data/"
