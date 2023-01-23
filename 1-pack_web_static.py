@@ -1,5 +1,6 @@
 '''
 A script to generate .tgz file from the contents of webstatic
+usage: fab -f 1-pack_web_static.py do_pack
 '''
 from fabric.api import local
 from time import strftime
@@ -10,11 +11,8 @@ def do_pack():
     timenow = strftime('%Y%M%d%H%M%S')
     try:
         local('mkdir -p versions')
-        filename = f'versions/web_static_{timenow}.tgz'
-        local(f'tar -czfv {filename} web_static/')
+        filename = 'versions/web_static_{timenow}.tgz'.format(timenow)
+        local('tar -czvf {} web_static/'.format(filename))
         return filename
     except Exception:
         return None
-
-if __name__ == '__main__':
-    do_pack()
