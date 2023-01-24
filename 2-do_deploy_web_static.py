@@ -3,7 +3,7 @@
 Deploy files to remote server using Fabric
 
 '''
-from fabric.api import env, put, return
+from fabric.api import env, put, run
 import os.path
 env.hosts = ['web1.osala.tech', 'web2.osala.tech']
 
