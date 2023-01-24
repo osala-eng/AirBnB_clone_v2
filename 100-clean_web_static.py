@@ -53,5 +53,5 @@ def do_clean(number=0):
     __run = '/data/web_static/releases/*.tgz'
     if number == 0:
         number = 1
-    local("rm -f `ls -t {} | awk 'NR>{}'".format(__local, number))
+    local("rm -f `ls -t {} | awk 'NR>{}'`".format(__local, number))
     run("rm -f `ls -t {} | awk 'NR>{}'`".format(__run, number))
