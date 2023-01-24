@@ -49,11 +49,9 @@ def deploy():
     return deployment
 
 def do_clean(number=0):
+    __local = 'versions/*.tgz'
+    __run = '/data/web_static/releases/*.tgz'
     if number == 0:
         number = 1
-    with cd.local('./versions'):
-        local("ls -lt | tail -n +{} | rev | cut -f1 -d" " | rev | \
-        xargs -d '\n' rm".format(1 + number))
-    with cd('/data/web_static/releases/'):
-        run("ls -lt | tail -n +{} | rev | cut -f1 -d" " | rev | \
-        xargs -d '\n' rm".format(1 + number))
+    local("rm -f `ls -t {} | awk 'NR>{}'".format(__local, number))
+    run("rm -f `ls -t {} | awk 'NR>{}'`".format(__run, number))
