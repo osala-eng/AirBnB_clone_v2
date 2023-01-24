@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 '''
 Deploy files to remote server using Fabric
 
