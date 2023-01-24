@@ -50,8 +50,8 @@ def deploy():
 
 def do_clean(number=0):
     __local = 'versions/*.tgz'
-    __run = '/data/web_static/releases/*.tgz'
+    __run = '/data/web_static/releases/web_static*'
     if number == 0:
         number = 1
     local("rm -f `ls -t {} | awk 'NR>{}'`".format(__local, number))
-    run("rm -f `ls -t {} | awk 'NR>{}'`".format(__run, number))
+    run("rm -rf `ls -td {} | awk 'NR>{}'`".format(__run, number))
