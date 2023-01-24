@@ -10,7 +10,7 @@ env.hosts = ['web1.osala.tech', 'web2.osala.tech']
 
 def do_deploy(archive_path):
     '''Upload achive to web servers'''
-    if not os.path.isFile(archive_path):
+    if not os.path.isfile(archive_path):
         return False
     try:
         filename = archive_path.split('/')[-1]
