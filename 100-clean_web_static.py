@@ -43,6 +43,7 @@ def do_deploy(archive_path):
         return False
 
 def deploy():
+    '''Deploy to the web server'''
     archive_path = do_pack()
     if archive_path is None:
         return False
@@ -50,6 +51,7 @@ def deploy():
     return deployment
 
 def do_clean(number=0):
+    '''Clean webservers'''
     __local = 'versions/*.tgz'
     __run = '/data/web_static/releases/web_static*'
     if number == 0:
