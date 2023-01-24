@@ -42,6 +42,7 @@ def do_deploy(archive_path):
     except Exception:
         return False
 
+
 def deploy():
     '''Deploy to the web server'''
     archive_path = do_pack()
@@ -49,6 +50,7 @@ def deploy():
         return False
     deployment = do_deploy(archive_path)
     return deployment
+
 
 def do_clean(number=0):
     '''Clean webservers'''
