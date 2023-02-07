@@ -34,5 +34,11 @@ def python_text(text="is cool"):
     return 'Python {}'.format(text.replace('_', ' '))
 
 
+@app.route('/number/<int:n>')
+def text_if_int(n):
+    """display text only if int given"""
+    return "{:d} is a number".format(n)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
